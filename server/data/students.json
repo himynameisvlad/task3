@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Иван Иванов",
+        "picSrc": "http://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50.png",
+        "bio": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "id": 1
+    },
+    {
+        "name": "1",
+        "picSrc": "http://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50.png",
+        "bio": "1",
+        "id": 2
+    },
+    {
+        "name": "2",
+        "picSrc": "http://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50.png",
+        "bio": "2",
+        "id": 3
+    }
+]
