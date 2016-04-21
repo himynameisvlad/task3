@@ -1,5 +1,7 @@
 /* Application */
 
+
+//Добавил функцию очистки инпутов формы
 function clearFormInputs(form) {
     var $form = document.getElementsByClassName(form)[0];
     [].forEach.call(
@@ -11,6 +13,7 @@ function clearFormInputs(form) {
         );
         $form.querySelectorAll('button')[0].removeAttribute('disabled');
 }
+
 
 function renderAddedStudent(student) {
 
@@ -32,12 +35,14 @@ function addToCache( student ) {
     studentJson = Object.assign({}, studentJson, {id: nextStudentId});
     studentStr = JSON.stringify(studentJson);
 
-    
-
     if(!localStorage['students']) {
+
         localStorage.setItem('students', `[${studentStr}]`);
+
         renderAddedStudent(studentStr);
+
         clearFormInputs('students__add-form');
+
     }else{
 
         var cachedData = JSON.parse(localStorage['students']);
@@ -147,7 +152,7 @@ function onStudentSaveClick(e) {
 
 function renderStudent(student) {
 
-    var pict = student.picSrc || student.picture; //Добавил
+    var pict = student.picSrc || student.picture; //Добавил для рендера студента, предназначенного для кэширования(чтобы не создавать лишнего св-а picSrc)
     
     return `
         <div class="student" data-student='${JSON.stringify(student)}'>
@@ -277,13 +282,11 @@ function loadStudentsFromCache() {
                 console.log(student);
                 renderAddedStudent(JSON.stringify(student));
             })
-
-
         })
     }
 }
 
-loadStudentsFromCache();
+
 
 function addStudent(student) {
     return fetch('/api/v1/students', {
@@ -312,6 +315,9 @@ function updateStudent(student) {
 /* Init */
 
 document.addEventListener('DOMContentLoaded', (event) => {
+
+    loadStudentsFromCache();
+
     delegate(
         document.querySelectorAll('.students'),
         '.students__add-btn',

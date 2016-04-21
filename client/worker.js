@@ -2,17 +2,14 @@ importScripts('./js/cache-polyfill.js');
 
 var CACHE_NAME = 'shri-2016-task3-1';
 var CACHE_PHOTOS = 'shri-2016-task3-2';
-var CACHE_POST = 'shri-2016-task3-post';
 const ALL_CACHES = [
     CACHE_NAME,
-    CACHE_PHOTOS,
-    CACHE_POST
+    CACHE_PHOTOS
 ];
 
 //Пути к файлам
 var urlsToCache = [
   '/',
-  '/index.html',
   '/css/index.css',//'/index.css' to '/css/index.css'
   '/js/index.js',//'/index.js' to '/js/index.js'
 ];
@@ -64,16 +61,17 @@ self.addEventListener('fetch', function(event) {
     }
 
 
-    //Добавил для изображений
+    //Добавил обработчик для изображений, имеющих расширение
     if(requestURL.href.endsWith('png') || requestURL.href.endsWith('gif') || requestURL.href.endsWith('jpg')) {
         event.respondWith(servePhoto(req));
         return;
     }
 
-    //Просто event.respond
+    //Просто event.respond()
     event.respondWith(getFromCache(req));
 });
 
+//ф-ия для кэширования фото
 function servePhoto(request) {
     var storageUrl = request.url.replace(/.(jpg||gif||png)$/, '');
 
@@ -91,10 +89,9 @@ function servePhoto(request) {
 
 function fetchAndPutToCache(request) {
 
-
     return fetch(request).then((response) => {
 
-        // Check if we received a valid response
+        // Проверка респонса на валидность
         if(!response || response.status !== 200 || response.type !== 'basic') {
           return response;
         }
@@ -108,10 +105,10 @@ function fetchAndPutToCache(request) {
             })
             .then(() => response);
     })
+    .catch(() => caches.match(request));
 }
 
 function getFromCache(request) {
-
 
     return caches.match(request)
         .then((response) => {
@@ -125,4 +122,5 @@ function getFromCache(request) {
 
             return fetchAndPutToCache(fetchRequest);
         });
+
 }
